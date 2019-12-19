@@ -13,11 +13,11 @@ Sensor reading is between 200 (dry) and 2000 (wet)
 Adafruit_seesaw ss;
 
 //starting with the RGB LEDs that I know how to code up.
-int R_Pin 9;
-int G_Pin 10;
-int B_Pin 11;
+int R_Pin = 9;
+int G_Pin = 10;
+int B_Pin = 11;
 // intialize a single LED for signal LED for when the moisture content is low
-int Signal_LED 1;
+int Signal_LED = 13;
 
 void setup() {
   //set the LED pins as OUTPUTS
@@ -49,9 +49,9 @@ void loop(){
   float tempC = ss.getTemp();
   uint16_t capread = ss.touchRead(0);
   
-  Serial.print("Temperature: "); Serial.print(TempC); Serial.println("*C);
+  Serial.print("Temperature: "); Serial.print(tempC); Serial.println("*C");
   Serial.print("Capacitve: "); Serial.println(capread);
-  Delay(1000);
+  delay(1000);
                                   
   // if the moisture in the soil is less than or equal to 300 (200 being dry) set the Signal_LED to high
   if (capread <=300) {
