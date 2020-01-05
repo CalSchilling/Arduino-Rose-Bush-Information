@@ -17,6 +17,16 @@ int B2_Pin = 6;
 
 //the codes above might work for RGB LED strips as well
 
+//initializing different ints for brightness
+
+int redBrightness;
+int greenBrightness;
+int blueBrightness;
+
+int redBrightness2;
+int greenBrightness2;
+int blueBrightnes2;
+
 // intialize a single LED for signal LED for when the moisture content is low
 int Signal_LED = 13;
 int soilSensorValue = 0;
@@ -61,15 +71,27 @@ void loop(){
 void RGB_color(int R_Value, int G_Value, int B_Value)
  {
   //set the value to be written to the corresponding Pin
-  analogWrite(R_Pin, R_Value);
-  analogWrite(G_Pin, G_Value);
-  analogWrite(B_Pin, B_Value);
+  analogWrite(R_Pin, redBrightness);
+  analogWrite(G_Pin, greenBrightness);
+  analogWrite(B_Pin, blueBrightness);
+  /*found out my LEDs are using a common anode (+) for the long pin of the LED
+  Because I am using the common anode (+) RGB LEDs the 255 is off and 0 is on for the RGB LED so the next set of code is required to get the LEDs to work properly.
+  I also changed the R_Value above to correspond with the following code
+  */
+
+  redBrightness = 255 - R_Value;
+  greenBrightness = 255 - G_Value;
+  blueBrightnes = 255 - B_Value;
 }
 
 void RGB_color2(int R2_Value, int G2_Value, int B2_Value)
  {
   //set the value to be written to the corresponding Pin
-  analogWrite(R2_Pin, R2_Value);
-  analogWrite(G2_Pin, G2_Value);
-  analogWrite(B2_Pin, B2_Value);
+   analogWrite(R2_Pin, redBrightness2);
+  analogWrite(G2_Pin, greenBrightness2);
+  analogWrite(B2_Pin, blueBrightnes2);
+
+  redBrightness2 = 255 - R_Value2;
+  greenBrightness2 = 255 - G_Value2;
+  blueBrightnes2 = 255 - B_Value2;
 }
