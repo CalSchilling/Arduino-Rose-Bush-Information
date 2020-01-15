@@ -91,7 +91,7 @@ void RGB_color2(int R2_Value, int G2_Value, int B2_Value)
   analogWrite(G2_Pin, greenBrightness2);
   analogWrite(B2_Pin, blueBrightnes2);
 
-  redBrightness2 = 255 - R_Value2;
-  greenBrightness2 = 255 - G_Value2;
-  blueBrightnes2 = 255 - B_Value2;
+  redBrightness2 = 255 - R2_Value;
+  greenBrightness2 = 255 - G2_Value;
+  blueBrightnes2 = 255 - B2_Value;
 }
