@@ -5,10 +5,16 @@ Another LED either RGB or just a single color as a signal that the soil is below
 Sensor reading is between 200 (dry) and 2000 (wet)
 */
 
+#include <SHT1x.h>
+#define dataPin 10
+#define clockPin 11
+SHT1x sht1x(dataPin, clockPin);
+
+
 //starting with the RGB LEDs that I know how to code up.
-int R_Pin = 9;
-int G_Pin = 10;
-int B_Pin = 11;
+//int R_Pin = 9;
+//int G_Pin = 10;
+//int B_Pin = 11;
 
 //setting up a second set of RGB LEDs 
 int R2_Pin = 3;
@@ -19,15 +25,12 @@ int B2_Pin = 6;
 
 // intialize a single LED for signal LED for when the moisture content is low
 int Signal_LED = 13;
-int soilSensorValue = 0;
-int thresholdUp = 400;
-int thresholdDown = 250;
 
 void setup() {
   //set the LED pins as OUTPUTS for plant growth.
-  pinMode(R_Pin, OUTPUT);
-  pinMode(G_Pin, OUTPUT);
-  pinMode(B_Pin, OUTPUT);
+  //pinMode(R_Pin, OUTPUT);
+  //pinMode(G_Pin, OUTPUT);
+  //pinMode(B_Pin, OUTPUT);
 
   pinMode(R2_Pin, OUTPUT);
   pinMode(G2_Pin, OUTPUT);
@@ -36,34 +39,39 @@ void setup() {
   
   //set up and start the moisture sensor
   Serial.begin(9600);
+  Serial.println("Initializing");
 
 }
 
 void loop(){
+
+  float tempF = sht1x.readTemperatureF();
+  float humidity = sht1x.readHumidity();
+
   RGB_color(255, 0, 0); //Setting first set of LEDs to Red
   RGB_color2(0, 0, 255); //Setting second set of LEDs to Blue
-  
- soilSensorValue = analogRead(A0);
-  soilSensorValue = map(soilSensorValue,0,1023,0,500); //map
-  Serial.println(soilSensorValue);
-  if (soilSensorValue >= thresholdDown){
-    Serial.println("Dry Water it!");
-    digitalWrite(Signal_LED, HIGH);
-    delay(1000);
-  }
-  else if (soilSensorValue <= thresholdUp){
-    Serial.println("Wet Leave it!");
-    digitalWrite(Signal_LED, LOW);
-    delay(1000);
-  }
-}
 
+  Serial.print ("Temerature: ");
+  Serial.print (tempF, DEC);
+  Serial.println ("F");
+  Serial.print ("Humidity: ");
+  Serial.print (humidity);
+  Serial.println ("%");
+  delay(1000);
+
+  if(humidity <= 20 || humidity == 100){
+    digitalWrite(13, HIGH);
+  }
+  else
+    digitalWrite(13, LOW);
+}
+  
 void RGB_color(int R_Value, int G_Value, int B_Value)
  {
   //set the value to be written to the corresponding Pin
-  analogWrite(R_Pin, R_Value);
-  analogWrite(G_Pin, G_Value);
-  analogWrite(B_Pin, B_Value);
+  //analogWrite(R_Pin, R_Value);
+  //analogWrite(G_Pin, G_Value);
+  //analogWrite(B_Pin, B_Value);
 }
 
 void RGB_color2(int R2_Value, int G2_Value, int B2_Value)
