@@ -11,15 +11,13 @@ Sensor reading is between 200 (dry) and 2000 (wet)
 SHT1x sht1x(dataPin, clockPin);
 
 
-//starting with the RGB LEDs that I know how to code up.
-//int R_Pin = 9;
-//int G_Pin = 10;
-//int B_Pin = 11;
-
-//setting up a second set of RGB LEDs 
-int R2_Pin = 3;
-int G2_Pin = 5;
-int B2_Pin = 6;
+/*starting with the RGB LEDs that I know how to code up
+so I am using 2 RGB LEDs to create a blue and red light but the LEDs only need to be activated on one of the 4 legs that the LED has so.... theoretically if I just add 5v
+to that leg of the LED wont the LED just turn whatever color that leg is?! Nope does not work that way... but... if I only use one pin to do 255 for the leg of the LED 
+I want active I just have to attach one wire from the arduino to the LED on the leg I want. */
+int R_Pin = 9;
+int G_Pin = 5;
+int B_Pin = 3;
 
 //the codes above might work for RGB LED strips as well
 
@@ -28,13 +26,9 @@ int Signal_LED = 13;
 
 void setup() {
   //set the LED pins as OUTPUTS for plant growth.
-  //pinMode(R_Pin, OUTPUT);
-  //pinMode(G_Pin, OUTPUT);
-  //pinMode(B_Pin, OUTPUT);
-
-  pinMode(R2_Pin, OUTPUT);
-  pinMode(G2_Pin, OUTPUT);
-  pinMode(B2_Pin, OUTPUT);
+  pinMode(R_Pin, OUTPUT);
+  pinMode(G_Pin, OUTPUT);
+  pinMode(B_Pin, OUTPUT);
   pinMode(Signal_LED, OUTPUT);
   
   //set up and start the moisture sensor
@@ -48,8 +42,7 @@ void loop(){
   float tempF = sht1x.readTemperatureF();
   float humidity = sht1x.readHumidity();
 
-  RGB_color(255, 0, 0); //Setting first set of LEDs to Red
-  RGB_color2(0, 0, 255); //Setting second set of LEDs to Blue
+  RGB_color(0, 0, 255); //Setting the leg of the LED to 255 so that I can 
 
   Serial.print ("Temerature: ");
   Serial.print (tempF, DEC);
@@ -69,15 +62,8 @@ void loop(){
 void RGB_color(int R_Value, int G_Value, int B_Value)
  {
   //set the value to be written to the corresponding Pin
-  //analogWrite(R_Pin, R_Value);
-  //analogWrite(G_Pin, G_Value);
-  //analogWrite(B_Pin, B_Value);
-}
+  analogWrite(R_Pin, R_Value);
+  analogWrite(G_Pin, G_Value);
+  analogWrite(B_Pin, B_Value);
 
-void RGB_color2(int R2_Value, int G2_Value, int B2_Value)
- {
-  //set the value to be written to the corresponding Pin
-  analogWrite(R2_Pin, R2_Value);
-  analogWrite(G2_Pin, G2_Value);
-  analogWrite(B2_Pin, B2_Value);
 }
