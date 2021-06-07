@@ -2,8 +2,10 @@
 Using an Arduino, sensors, LED to help grow our indoor rose bush
 
 Change Log:
-
 ---
+
+### 2021-06-06 | 
+The sensor I originally went with I believe has failed. I get a reading of 97% Humidity when the soil feels dry. After watering (and possibly overwater) the sensor does not move much if at all. Need to conduct more testing.
 
 ### 2019-12-26 |
 ##### Some notes are embeded in the arduino coding itself so you can follow along there.
